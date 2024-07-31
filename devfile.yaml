@@ -1,67 +1,91 @@
-schemaVersion: 2.2.2
+schemaVersion: 2.2.0
 metadata:
-  name: java-maven
-  displayName: Maven Java
-  description: JBoson Application
-  icon: https://github.com/ronaldor1968/che-test/blob/main/java-maven.jpg
+  name: wildfly-start
+  namespace: admin-che
+  version: 2.0.2
+  website: https://wildfly.org
+  displayName: WildFly Getting Started
+  description: Upstream WildFly Getting Started
+  icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
   tags:
     - Java
-    - Maven
-  projectType: Maven
+    - WildFly
+  projectType: wildfly
   language: Java
-  version: 1.3.1
-
-#starterProjects:
-#- name: che-test-starter
-#  git:
-#    remotes:
-#      origin: https://github.com/ronaldor1968/che-test.git
-
 components:
   - name: tools
     container:
-      image: registry.access.redhat.com/ubi9/openjdk-17:1.17-1.1705573248
-      command: ["tail", "-f", "/dev/null"]
-      memoryLimit: 512Mi
+      image: quay.io/devfile/universal-developer-image:ubi8-latest
+      memoryLimit: 1512Mi
       mountSources: true
-      endpoints:
-        - name: https-maven
-          targetPort: 8080
-          protocol: https
-        - exposure: none
-          name: debug
-          targetPort: 5858
       volumeMounts:
         - name: m2
           path: /home/user/.m2
       env:
+        - name: JAVA_OPTS
+          value: '-Djava.security.egd=file:/dev/urandom -Djboss.host.name=localhost'
         - name: DEBUG_PORT
-          value: '5858'
+          value: '5005'
+        - name: NODE_NAME
+          value: '{{nodeName}}'
+        - name: IMAGE
+          value: '{{imageName}}'
+      endpoints:
+        - name: debug
+          exposure: internal
+          protocol: tcp
+          targetPort: 5005
+        - name: http
+          protocol: https
+          targetPort: 8080
+          exposure: public
+        - name: management
+          targetPort: 9990
+          protocol: http
+          exposure: internal
   - name: m2
-    volume: {}
-
+    volume:
+      size: 3Gi
 commands:
-  - id: mvn-package
+  - id: package
     exec:
+      label: 01 - Build the application.
       component: tools
+      commandLine: mvn clean verify
       workingDir: ${PROJECT_SOURCE}
-      commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository package'
+      hotReloadCapable: true
       group:
         kind: build
         isDefault: true
   - id: run
     exec:
+      label: 02 - Run the application in dev mode.
       component: tools
+      commandLine: mvn -Dwildfly.javaOpts="-Djboss.host.name=${NODE_NAME}" -Dmaven.test.skip=true clean package org.wildfly.plugins:wildfly-maven-plugin:dev
       workingDir: ${PROJECT_SOURCE}
-      commandLine: 'java -jar target/*.jar'
+      hotReloadCapable: true
       group:
         kind: run
         isDefault: true
   - id: debug
     exec:
+      label: 03 - Debug the application in dev mode.
       component: tools
+      commandLine: mvn -Dwildfly.javaOpts="-Djboss.host.name=${NODE_NAME} -agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n" -Dmaven.test.skip=true clean package org.wildfly.plugins:wildfly-maven-plugin:dev
       workingDir: ${PROJECT_SOURCE}
-      commandLine: 'java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=${DEBUG_PORT},suspend=n -jar target/*.jar'
+      hotReloadCapable: true
       group:
         kind: debug
         isDefault: true
+variables:
+  applicationName: start
+  nodeName: getting-started
+starterProjects:
+  - name: getting-started
+    description: WildFly Getting Started
+    git:
+      checkoutFrom:
+        remote: wildfly-devfile-examples
+        revision: getting-started-2.0.2
+      remotes:
+        wildfly-devfile-examples: https://github.com/wildfly-extras/wildfly-devfile-examples.git
