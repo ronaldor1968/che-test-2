@@ -1,29 +1,26 @@
 schemaVersion: 2.2.0
 metadata:
-  name: wildfly-start
-  namespace: admin-che
+  name: minimal-test
   version: 2.0.2
   website: https://wildfly.org
-  displayName: WildFly Getting Started
-  description: Upstream WildFly Getting Started
+  displayName: Minimal test for eclipse-che
+  description: Minimal test for eclipse-che
   icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
   tags:
     - Java
-    - WildFly
-  projectType: wildfly
+    - Maven
+  projectType: maven
   language: Java
 components:
   - name: tools
     container:
-      image: quay.io/devfile/universal-developer-image:ubi8-latest
-      memoryLimit: 1512Mi
+      image: duruu/glassfish3:latest
+      memoryLimit: 2048Mi
       mountSources: true
       volumeMounts:
         - name: m2
           path: /home/user/.m2
       env:
-        - name: JAVA_OPTS
-          value: '-Djava.security.egd=file:/dev/urandom -Djboss.host.name=localhost'
         - name: DEBUG_PORT
           value: '5005'
         - name: NODE_NAME
@@ -45,7 +42,7 @@ components:
           exposure: internal
   - name: m2
     volume:
-      size: 3Gi
+      size: 6Gi
 commands:
   - id: package
     exec:
@@ -57,35 +54,6 @@ commands:
       group:
         kind: build
         isDefault: true
-  - id: run
-    exec:
-      label: 02 - Run the application in dev mode.
-      component: tools
-      commandLine: mvn -Dwildfly.javaOpts="-Djboss.host.name=${NODE_NAME}" -Dmaven.test.skip=true clean package org.wildfly.plugins:wildfly-maven-plugin:dev
-      workingDir: ${PROJECT_SOURCE}
-      hotReloadCapable: true
-      group:
-        kind: run
-        isDefault: true
-  - id: debug
-    exec:
-      label: 03 - Debug the application in dev mode.
-      component: tools
-      commandLine: mvn -Dwildfly.javaOpts="-Djboss.host.name=${NODE_NAME} -agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n" -Dmaven.test.skip=true clean package org.wildfly.plugins:wildfly-maven-plugin:dev
-      workingDir: ${PROJECT_SOURCE}
-      hotReloadCapable: true
-      group:
-        kind: debug
-        isDefault: true
 variables:
   applicationName: start
   nodeName: getting-started
-starterProjects:
-  - name: getting-started
-    description: WildFly Getting Started
-    git:
-      checkoutFrom:
-        remote: wildfly-devfile-examples
-        revision: getting-started-2.0.2
-      remotes:
-        wildfly-devfile-examples: https://github.com/wildfly-extras/wildfly-devfile-examples.git
