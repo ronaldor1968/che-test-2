@@ -16,7 +16,7 @@ components:
     container:      
       image: docker.io/library/glassfish3:latest
       memoryLimit: 4096Mi
-      mountSources: true
+#      mountSources: true
 #      volumeMounts:
 #        - name: m2
 #          path: /home/user/.m2
