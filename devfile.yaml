@@ -13,8 +13,7 @@ metadata:
   language: Java
 components:
   - name: glassfish3
-    container:
-      # image: docker.io/localhost/glassfish3:latest
+    container:      
       image: docker.io/library/glassfish3:latest
       memoryLimit: 4096Mi
       mountSources: true
@@ -26,21 +25,19 @@ components:
           value: '9009'
         - name: NODE_NAME
           value: '{{nodeName}}'
-        #- name: IMAGE
-        #  value: '{{imageName}}'
-      endpoints:
-        - name: debug
-          exposure: internal
-          protocol: tcp
-          targetPort: 5005
-        - name: http
-          protocol: https
-          targetPort: 8080
-          exposure: public
-        - name: management
-          targetPort: 9990
-          protocol: http
-          exposure: internal
+#      endpoints:
+#        - name: debug
+#          exposure: internal
+#          protocol: tcp
+#          targetPort: 5005
+#        - name: http
+#          protocol: https
+#          targetPort: 8080
+#          exposure: public
+#        - name: management
+#          targetPort: 9990
+#          protocol: http
+#          exposure: internal
   - name: m2
     volume:
       size: 6Gi
