@@ -17,14 +17,14 @@ components:
       image: docker.io/library/glassfish3:latest
       memoryLimit: 4096Mi
       mountSources: true
-      volumeMounts:
-        - name: m2
-          path: /home/user/.m2
-      env:
-        - name: DEBUG_PORT
-          value: '9009'
-        - name: NODE_NAME
-          value: '{{nodeName}}'
+#      volumeMounts:
+#        - name: m2
+#          path: /home/user/.m2
+#      env:
+#        - name: DEBUG_PORT
+#          value: '9009'
+#        - name: NODE_NAME
+#          value: '{{nodeName}}'
 #      endpoints:
 #        - name: debug
 #          exposure: internal
