@@ -14,15 +14,15 @@ metadata:
 components:
   - name: tools
     container:
-      image: duruu/glassfish3:latest
-      memoryLimit: 2048Mi
+      image: docker.io/localhost/glassfish3:latest
+      memoryLimit: 4096Mi
       mountSources: true
       volumeMounts:
         - name: m2
           path: /home/user/.m2
       env:
         - name: DEBUG_PORT
-          value: '5005'
+          value: '9009'
         - name: NODE_NAME
           value: '{{nodeName}}'
         - name: IMAGE
