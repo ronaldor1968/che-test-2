@@ -26,8 +26,8 @@ components:
           value: '9009'
         - name: NODE_NAME
           value: '{{nodeName}}'
-        - name: IMAGE
-          value: '{{imageName}}'
+        #- name: IMAGE
+        #  value: '{{imageName}}'
       endpoints:
         - name: debug
           exposure: internal
