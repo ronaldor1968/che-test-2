@@ -12,11 +12,12 @@ metadata:
   projectType: maven
   language: Java
 components:
-
+  - name: glassfish3Image
+    image: docker.io/localhost/glassfish3:latest
+    imagePullPolicy: Never
   - name: glassfish3
     container:
       image: docker.io/localhost/glassfish3:latest
-      imagePullPolicy: Never
       memoryLimit: 4096Mi
       mountSources: true
       volumeMounts:
