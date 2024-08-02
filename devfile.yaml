@@ -15,6 +15,7 @@ components:
   - name: tools
     container:
       image: docker.io/localhost/glassfish3:latest
+      imagePullPolicy: never
       memoryLimit: 4096Mi
       mountSources: true
       volumeMounts:
