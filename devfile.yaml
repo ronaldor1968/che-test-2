@@ -5,7 +5,7 @@ metadata:
   website: https://wildfly.org
   displayName: Minimal test for eclipse-che
   description: Minimal test for eclipse-che
-  icon: https://seeklogo.com/images/G/glassfish-logo-0C415CD944-seeklogo.com.png
+  icon: https://cdn.icon-icons.com/icons2/2699/PNG/512/javaee_glassfish_logo_icon_167856.png
   tags:
     - Java
     - Maven
