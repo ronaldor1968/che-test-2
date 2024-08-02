@@ -15,7 +15,7 @@ components:
   - name: glassfish3
     container:
       # image: docker.io/localhost/glassfish3:latest
-      image: 4edf272d42caac6f3dbe66660398e97acb3c0f91682afa29a49303ece3d8e9ea
+      image: localhost/glassfish3:latest
       memoryLimit: 4096Mi
       mountSources: true
       volumeMounts:
