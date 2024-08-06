@@ -12,7 +12,8 @@ metadata:
 components:
   - name: glassfish3
     container:      
-      image: docker.io/library/glassfish3i:latest
+      # image: docker.io/library/glassfish3:latest
+      image: quay.io/devfile/universal-developer-image:ubi8-latest
       memoryLimit: 4096Mi
       mountSources: true
       volumeMounts:
