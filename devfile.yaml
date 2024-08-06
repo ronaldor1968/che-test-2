@@ -1,8 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
   name: minimal-test
-  version: 2.0.2
-  website: https://wildfly.org
   displayName: Minimal test for eclipse-che
   description: Minimal test for eclipse-che
   icon: https://cdn.icon-icons.com/icons2/2699/PNG/512/javaee_glassfish_logo_icon_167856.png
