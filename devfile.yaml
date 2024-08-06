@@ -16,42 +16,50 @@ components:
     container:      
       image: docker.io/library/glassfish3:latest
       memoryLimit: 4096Mi
-#      mountSources: true
-#      volumeMounts:
-#        - name: m2
-#          path: /home/user/.m2
-#      env:
-#        - name: DEBUG_PORT
-#          value: '9009'
-#        - name: NODE_NAME
-#          value: '{{nodeName}}'
-#      endpoints:
-#        - name: debug
-#          exposure: internal
-#          protocol: tcp
-#          targetPort: 5005
-#        - name: http
-#          protocol: https
-#          targetPort: 8080
-#          exposure: public
+      mountSources: true
+      volumeMounts:
+        - name: m2
+          path: /home/user/.m2
+      env:
+        - name: DEBUG_PORT
+          value: '9009'
+        - name: NODE_NAME
+          value: '{{nodeName}}'
+      endpoints:
+        - name: debug
+          exposure: internal
+          protocol: tcp
+          targetPort: 9009
+        - name: http1
+          protocol: https
+          targetPort: 8080
+          exposure: public
+        - name: http2
+          protocol: https
+          targetPort: 8181
+          exposure: public  
+        - name: admin
+          protocol: https
+          targetPort: 4848
+          exposure: public  
 #        - name: management
 #          targetPort: 9990
 #          protocol: http
 #          exposure: internal
-#  - name: m2
-#    volume:
-#      size: 6Gi
-#commands:
-#  - id: package
-#    exec:
-#      label: 01 - Build the application.
-#      component: tools
-#      commandLine: mvn clean verify
-#      workingDir: ${PROJECT_SOURCE}
-#      hotReloadCapable: true
-#      group:
-#        kind: build
-#        isDefault: true
-#variables:
-#  applicationName: start
-#  nodeName: getting-started
+  - name: m2
+    volume:
+      size: 6Gi
+commands:
+  - id: package
+    exec:
+      label: 01 - Build the application.
+      component: tools
+      commandLine: mvn clean verify
+      workingDir: ${PROJECT_SOURCE}
+      hotReloadCapable: true
+      group:
+        kind: build
+        isDefault: true
+variables:
+  applicationName: start
+  nodeName: getting-started
