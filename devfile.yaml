@@ -11,7 +11,7 @@ metadata:
   projectType: maven
   language: Java
 components:
-  - name: glassfish3Image
+  - name: glassfish3
     container:
       image: docker.io/libraryglassfish3:latest
       memoryLimit: 4096Mi
