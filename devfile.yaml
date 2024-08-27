@@ -2,7 +2,6 @@ schemaVersion: 2.2.0
 metadata:
   name: minimal-test
   version: 2.0.2
-  website: https://wildfly.org
   displayName: Minimal test for eclipse-che
   description: Minimal test for eclipse-che  
   tags:
