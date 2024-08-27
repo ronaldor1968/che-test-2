@@ -4,8 +4,7 @@ metadata:
   version: 2.0.2
   website: https://wildfly.org
   displayName: Minimal test for eclipse-che
-  description: Minimal test for eclipse-che
-  icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
+  description: Minimal test for eclipse-che  
   tags:
     - Java
     - Maven
@@ -13,50 +12,10 @@ metadata:
   language: Java
 components:
   - name: glassfish3Image
-    image: docker.io/localhost/glassfish3:latest
+    image: docker.io/libraryglassfish3:latest
     imagePullPolicy: Never
   - name: glassfish3
     container:
       image: docker.io/localhost/glassfish3:latest
       memoryLimit: 4096Mi
-      mountSources: true
-      volumeMounts:
-        - name: m2
-          path: /home/user/.m2
-      env:
-        - name: DEBUG_PORT
-          value: '9009'
-        - name: NODE_NAME
-          value: '{{nodeName}}'
-        - name: IMAGE
-          value: '{{imageName}}'
-      endpoints:
-        - name: debug
-          exposure: internal
-          protocol: tcp
-          targetPort: 5005
-        - name: http
-          protocol: https
-          targetPort: 8080
-          exposure: public
-        - name: management
-          targetPort: 9990
-          protocol: http
-          exposure: internal
-  - name: m2
-    volume:
-      size: 6Gi
-commands:
-  - id: package
-    exec:
-      label: 01 - Build the application.
-      component: tools
-      commandLine: mvn clean verify
-      workingDir: ${PROJECT_SOURCE}
-      hotReloadCapable: true
-      group:
-        kind: build
-        isDefault: true
-variables:
-  applicationName: start
-  nodeName: getting-started
+      
