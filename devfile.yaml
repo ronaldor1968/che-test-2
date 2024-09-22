@@ -10,8 +10,8 @@ metadata:
   projectType: maven
   language: Java
 components:
-  - name: glassfish3
+  - name: testeminimo
     container:
-      image: docker.io/library/glassfish3:latest
+      image: docker pull jgsqware/svn-client:latest
       memoryLimit: 4096Mi
       
