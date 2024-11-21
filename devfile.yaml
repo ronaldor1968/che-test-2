@@ -12,6 +12,6 @@ metadata:
 components:
   - name: testeminimo
     container:
-      image: jgsqware/svn-client:latest
+      image: bitnami/git:latest
       memoryLimit: 4096Mi
       
