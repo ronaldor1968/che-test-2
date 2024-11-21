@@ -12,6 +12,6 @@ metadata:
 components:
   - name: testeminimo
     container:
-      image: docker pull jgsqware/svn-client:latest
+      image: jgsqware/svn-client:latest
       memoryLimit: 4096Mi
       
